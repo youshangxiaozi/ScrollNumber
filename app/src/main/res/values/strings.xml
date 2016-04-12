@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">TestWeidge</string>
+
+    <string name="start_re">开始/重新开始[0-1000]</string>
+    <string name="pause">停止</string>
+    <string name="add">+1</string>
+    <string name="add_188">+188</string>
+
+    <string-array name="way">
+        <item>摩托车里程表模式</item>
+        <item>老虎机模式</item>
+    </string-array>
+</resources>
