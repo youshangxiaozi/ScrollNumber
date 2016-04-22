@@ -63,4 +63,20 @@
         android:layout_below="@+id/add_188"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"/>
+
+    <com.youshangxiaozi.testweidge.BothTransContainer
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/start_re"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:background="#33ffff00"
+        android:id="@+id/btc">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#ff0000"
+            android:text="12345678"
+            android:textSize="20sp"/>
+    </com.youshangxiaozi.testweidge.BothTransContainer>
 </RelativeLayout>
