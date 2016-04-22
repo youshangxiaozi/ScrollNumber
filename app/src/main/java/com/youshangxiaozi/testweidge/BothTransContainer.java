@@ -35,7 +35,7 @@ public class BothTransContainer extends RelativeLayout implements ValueAnimator.
     }
 
     private ObjectAnimator mAnimator = null;
-    public void animate(int during, int from, int to) {
+    private void animate(int during, int from, int to) {
         if (width != 0 && height != 0) {
             if (mAnimator != null && mAnimator.isRunning()) {
                 mAnimator.cancel();
@@ -87,6 +87,22 @@ public class BothTransContainer extends RelativeLayout implements ValueAnimator.
         if (width != 0 && height != 0) {
             animate(during, getDxy(), 0);
         }
+    }
+
+    /**
+     * 获取收缩或者散开总宽度
+     * @return 宽度
+     */
+    public int getAnimateWidth() {
+        return width;
+    }
+
+    /**
+     * 获取收缩或者散开总高度
+     * @return 高度
+     */
+    public int getAnimateHeight() {
+        return height;
     }
 
     public int getDxy() {

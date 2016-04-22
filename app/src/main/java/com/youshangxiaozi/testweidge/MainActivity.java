@@ -12,7 +12,7 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
 
     private SlotNumView slotNumView;
-    private BothTransContainer bothTransContainer;
+    private GiftGroove gg;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,8 +35,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         v.setLayoutParams(lp);
         slotNumView.setTextView(v);
 
-        bothTransContainer = (BothTransContainer)findViewById(R.id.btc);
-        bothTransContainer.setOnClickListener(this);
+        gg = (GiftGroove)findViewById(R.id.gg);
+        gg.setOnClickListener(this);
     }
 
     @Override
@@ -65,11 +65,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             case R.id.pause:
                 slotNumView.pause();
                 break;
-            case R.id.btc:
+            case R.id.gg:
                 if (count++ % 2 == 0) {
-                    bothTransContainer.shrink(200);
+                    gg.shrink(200);
                 } else {
-                    bothTransContainer.spread(200);
+                    gg.spread(200);
                 }
                 break;
         }
