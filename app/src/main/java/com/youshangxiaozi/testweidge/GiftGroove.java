@@ -5,7 +5,6 @@ import android.animation.PropertyValuesHolder;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.util.AttributeSet;
-import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -48,7 +47,7 @@ public class GiftGroove extends LinearLayout implements ValueAnimator.AnimatorUp
             PropertyValuesHolder dxyUpdate = PropertyValuesHolder.ofInt("dxy", from, to);
             mAnimator = ObjectAnimator.ofPropertyValuesHolder(this, dxyUpdate);
             mAnimator.setDuration(during);
-            mAnimator.setInterpolator(new DecelerateInterpolator());
+            mAnimator.setInterpolator(groove.getInterpolator());
             mAnimator.addUpdateListener(this);
             mAnimator.start();
         }

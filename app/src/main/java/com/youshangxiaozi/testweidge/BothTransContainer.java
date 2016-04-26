@@ -7,6 +7,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.view.animation.DecelerateInterpolator;
+import android.view.animation.Interpolator;
 import android.widget.RelativeLayout;
 
 /**
@@ -15,6 +16,8 @@ import android.widget.RelativeLayout;
  */
 public class BothTransContainer extends RelativeLayout implements ValueAnimator.AnimatorUpdateListener {
     private Direction direction = Direction.CLIP_LEFT;
+    private Interpolator interpolator = new DecelerateInterpolator();
+
     public BothTransContainer(Context context) {
         super(context);
         init();
@@ -44,10 +47,26 @@ public class BothTransContainer extends RelativeLayout implements ValueAnimator.
             PropertyValuesHolder dxyUpdate = PropertyValuesHolder.ofInt("dxy", from, to);
             mAnimator = ObjectAnimator.ofPropertyValuesHolder(this, dxyUpdate);
             mAnimator.setDuration(during);
-            mAnimator.setInterpolator(new DecelerateInterpolator());
+            mAnimator.setInterpolator(interpolator);
             mAnimator.addUpdateListener(this);
             mAnimator.start();
         }
+    }
+
+    /**
+     * 获取插值器
+     * @return 动画的插值器
+     */
+    public Interpolator getInterpolator() {
+        return interpolator;
+    }
+
+    /**
+     * 设置插值器
+     * @param interpolator 动画的插值器
+     */
+    public void setInterpolator(Interpolator interpolator) {
+        this.interpolator = interpolator;
     }
 
     /**

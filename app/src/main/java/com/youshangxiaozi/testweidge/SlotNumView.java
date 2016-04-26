@@ -10,6 +10,7 @@ import android.os.Build;
 import android.util.AttributeSet;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
+import android.view.animation.Interpolator;
 import android.widget.TextView;
 
 
@@ -18,6 +19,22 @@ import android.widget.TextView;
  * Created by liangdaijian on 16/4/8.
  */
 public class SlotNumView extends ViewGroup implements ValueAnimator.AnimatorUpdateListener {
+    private Interpolator interpolator = new DecelerateInterpolator();
+    /**
+     * 获取插值器
+     * @return 动画的插值器
+     */
+    public Interpolator getInterpolator() {
+        return interpolator;
+    }
+
+    /**
+     * 设置插值器
+     * @param interpolator 动画的插值器
+     */
+    public void setInterpolator(Interpolator interpolator) {
+        this.interpolator = interpolator;
+    }
 
     public SlotNumView(Context context) {
         super(context);
@@ -81,7 +98,7 @@ public class SlotNumView extends ViewGroup implements ValueAnimator.AnimatorUpda
             PropertyValuesHolder initScaleX1 = PropertyValuesHolder.ofFloat("curr", curr, result);
             initScaleAnimator1 = ObjectAnimator.ofPropertyValuesHolder(this, initScaleX1);
             initScaleAnimator1.setDuration(duration);
-            initScaleAnimator1.setInterpolator(new DecelerateInterpolator());
+            initScaleAnimator1.setInterpolator(interpolator);
             initScaleAnimator1.addUpdateListener(this);
             initScaleAnimator1.start();
         }
