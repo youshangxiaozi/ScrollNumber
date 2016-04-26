@@ -10,6 +10,9 @@ import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.widget.RelativeLayout;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 一个RelativeLayout的容器，提供收缩和散开的效果
  * Created by liangdaijian on 16/4/22.
@@ -17,6 +20,7 @@ import android.widget.RelativeLayout;
 public class BothTransContainer extends RelativeLayout implements ValueAnimator.AnimatorUpdateListener {
     private Direction direction = Direction.CLIP_LEFT;
     private Interpolator interpolator = new DecelerateInterpolator();
+    private List<ValueAnimator.AnimatorUpdateListener> mAuls = new ArrayList<ValueAnimator.AnimatorUpdateListener>();
 
     public BothTransContainer(Context context) {
         super(context);
@@ -51,14 +55,6 @@ public class BothTransContainer extends RelativeLayout implements ValueAnimator.
             mAnimator.addUpdateListener(this);
             mAnimator.start();
         }
-    }
-
-    /**
-     * 获取插值器
-     * @return 动画的插值器
-     */
-    public Interpolator getInterpolator() {
-        return interpolator;
     }
 
     /**
@@ -106,22 +102,6 @@ public class BothTransContainer extends RelativeLayout implements ValueAnimator.
         if (width != 0 && height != 0) {
             animate(during, getDxy(), 0);
         }
-    }
-
-    /**
-     * 获取收缩或者散开总宽度
-     * @return 宽度
-     */
-    public int getAnimateWidth() {
-        return width;
-    }
-
-    /**
-     * 获取收缩或者散开总高度
-     * @return 高度
-     */
-    public int getAnimateHeight() {
-        return height;
     }
 
     public int getDxy() {
@@ -177,7 +157,24 @@ public class BothTransContainer extends RelativeLayout implements ValueAnimator.
     @Override
     public void onAnimationUpdate(ValueAnimator animation) {
         LogUtils.d("BothTransContainer", "dxy=" + getDxy());
+        notifyAnimatorUpdateListener(animation);
         invalidate();
+    }
+
+    /**
+     * 添加动画update的listener
+     * @param aul 动画update的listener
+     */
+    public void addAnimatorUpdateListener(ValueAnimator.AnimatorUpdateListener aul){
+        if (aul != null && !mAuls.contains(aul)) {
+            mAuls.add(aul);
+        }
+    }
+
+    private void notifyAnimatorUpdateListener(ValueAnimator animation){
+        for (int i = mAuls.size() - 1; i >= 0; i--) {
+            mAuls.get(i).onAnimationUpdate(animation);
+        }
     }
 
 

@@ -68,7 +68,7 @@ public class SlotNumView extends ViewGroup implements ValueAnimator.AnimatorUpda
         invalidate();
     }
 
-    private ObjectAnimator initScaleAnimator1 = null;
+    private ObjectAnimator mAnimator = null;
 
     private int getDuration(int interval) {
         LogUtils.i("SlotNumView", "getDuration interval=" + interval);
@@ -91,16 +91,16 @@ public class SlotNumView extends ViewGroup implements ValueAnimator.AnimatorUpda
         result = result + count;
         int duration = getDuration(result - (int)curr);
         if (duration > 0) {
-            if (initScaleAnimator1 != null && initScaleAnimator1.isRunning()) {
-                initScaleAnimator1.cancel();
-                initScaleAnimator1 = null;
+            if (mAnimator != null && mAnimator.isRunning()) {
+                mAnimator.cancel();
+                mAnimator = null;
             }
             PropertyValuesHolder initScaleX1 = PropertyValuesHolder.ofFloat("curr", curr, result);
-            initScaleAnimator1 = ObjectAnimator.ofPropertyValuesHolder(this, initScaleX1);
-            initScaleAnimator1.setDuration(duration);
-            initScaleAnimator1.setInterpolator(interpolator);
-            initScaleAnimator1.addUpdateListener(this);
-            initScaleAnimator1.start();
+            mAnimator = ObjectAnimator.ofPropertyValuesHolder(this, initScaleX1);
+            mAnimator.setDuration(duration);
+            mAnimator.setInterpolator(interpolator);
+            mAnimator.addUpdateListener(this);
+            mAnimator.start();
         }
     }
 
@@ -212,18 +212,18 @@ public class SlotNumView extends ViewGroup implements ValueAnimator.AnimatorUpda
     public void start_re(){
         curr = 0;
         result = 0;
-        if (initScaleAnimator1 != null && initScaleAnimator1.isRunning()) {
-            initScaleAnimator1.cancel();
-            initScaleAnimator1 = null;
+        if (mAnimator != null && mAnimator.isRunning()) {
+            mAnimator.cancel();
+            mAnimator = null;
         }
         addCount(1000);
     }
 
     public void pause() {
         result = (int)Math.ceil(curr);
-        if (initScaleAnimator1 != null && initScaleAnimator1.isRunning()) {
-            initScaleAnimator1.cancel();
-            initScaleAnimator1 = null;
+        if (mAnimator != null && mAnimator.isRunning()) {
+            mAnimator.cancel();
+            mAnimator = null;
         }
         invalidate();
     }
