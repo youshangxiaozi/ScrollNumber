@@ -54,18 +54,18 @@ public class RiverEffectsView extends View implements ValueAnimator.AnimatorUpda
         TypedArray ta = context.obtainStyledAttributes(attrs,
                 R.styleable.RiverEffectsView, defStyleAttr, 0);
 
-        Drawable r = ta.getDrawable(R.styleable.RiverEffectsView_river);
+        Drawable r = ta.getDrawable(R.styleable.RiverEffectsView_rev_river);
         if (r instanceof BitmapDrawable) {
             river = ((BitmapDrawable) r).getBitmap();
             fixH = river.getHeight() * 0.07f;
         }
 
-        Drawable l = ta.getDrawable(R.styleable.RiverEffectsView_logo);
+        Drawable l = ta.getDrawable(R.styleable.RiverEffectsView_rev_logo);
         if (l instanceof BitmapDrawable) {
             logo = ((BitmapDrawable) l).getBitmap();
         }
 
-        Drawable m = ta.getDrawable(R.styleable.RiverEffectsView_mask);
+        Drawable m = ta.getDrawable(R.styleable.RiverEffectsView_rev_mask);
         if (m instanceof BitmapDrawable) {
             mask = ((BitmapDrawable) m).getBitmap();
         } else if (river != null) {

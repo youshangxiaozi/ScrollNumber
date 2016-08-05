@@ -1,5 +1,6 @@
 package com.youshangxiaozi.testweidge;
 
+import android.animation.Animator;
 import android.animation.TypeEvaluator;
 import android.animation.ValueAnimator;
 import android.annotation.TargetApi;
@@ -9,6 +10,7 @@ import android.graphics.PathMeasure;
 import android.graphics.PointF;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.View;
 import android.view.animation.Interpolator;
 import android.widget.FrameLayout;
@@ -32,6 +34,55 @@ public class PathAnimatorContainer extends FrameLayout implements ValueAnimator.
     }
 
     /**
+     *
+     * @param view
+     * @param start
+     * @param coordinate
+     * @param end
+     */
+    public void addFavor(View view, PointF start, PointF coordinate, PointF end) {
+        if (view != null) {
+            if (indexOfChild(view) == -1) {
+                view.setVisibility(GONE);
+                LayoutParams lp = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+                if (start != null) {
+                    lp.gravity = Gravity.LEFT | Gravity.TOP;
+                    lp.leftMargin = (int) start.x;
+                    lp.topMargin = (int) start.y;
+                }
+                addView(view, lp);
+            }
+            startPathAnomate(view, start, coordinate, end, 5000, null, new NormalAnimatorListener(view));
+        }
+
+    }
+
+    /**
+     *
+     * @param view
+     * @param start
+     * @param coordinate
+     * @param coordinate2
+     * @param end
+     */
+    public void addFavor(View view, PointF start, PointF coordinate, PointF coordinate2, PointF end) {
+        if (view != null) {
+            if (indexOfChild(view) == -1) {
+                view.setVisibility(GONE);
+                LayoutParams lp = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+                if (start != null) {
+                    lp.gravity = Gravity.LEFT | Gravity.TOP;
+                    lp.leftMargin = (int) start.x;
+                    lp.topMargin = (int) start.y;
+                }
+                addView(view, lp);
+            }
+            startPathAnomate(view, start, coordinate, coordinate2, end, 5000, null, new NormalAnimatorListener(view));
+        }
+
+    }
+
+    /**
      * 跑曲线动画
      * @param view 动画的view，要求是子view
      * @param start 起始的点
@@ -42,12 +93,12 @@ public class PathAnimatorContainer extends FrameLayout implements ValueAnimator.
      * @param itl 插值器
      * @return
      */
-    public boolean startPathAnomate(View view, PointF start, PointF coordinate, PointF coordinate2, PointF end, int duration, Interpolator itl) {
+    private boolean startPathAnomate(View view, PointF start, PointF coordinate, PointF coordinate2, PointF end, int duration, Interpolator itl, Animator.AnimatorListener aml) {
         if (start != null && coordinate != null && end != null) {
             Path path = new Path();
             path.moveTo(start.x, start.y);
             path.cubicTo(coordinate.x, coordinate.y, coordinate2.x, coordinate2.y, end.x, end.y);
-            return startPathAnomate(view, path, duration, itl);
+            return startPathAnomate(view, path, duration, itl, aml);
         } else {
             return false;
         }
@@ -63,12 +114,12 @@ public class PathAnimatorContainer extends FrameLayout implements ValueAnimator.
      * @param itl 插值器
      * @return
      */
-    public boolean startPathAnomate(View view, PointF start, PointF coordinate, PointF end, int duration, Interpolator itl) {
+    private boolean startPathAnomate(View view, PointF start, PointF coordinate, PointF end, int duration, Interpolator itl, Animator.AnimatorListener aml) {
         if (start != null && coordinate != null && end != null) {
             Path path = new Path();
             path.moveTo(start.x, start.y);
             path.quadTo(coordinate.x, coordinate.y, end.x, end.y);
-            return startPathAnomate(view, path, duration, itl);
+            return startPathAnomate(view, path, duration, itl, aml);
         } else {
             return false;
         }
@@ -82,7 +133,7 @@ public class PathAnimatorContainer extends FrameLayout implements ValueAnimator.
      * @param itl 插值器
      * @return
      */
-    public boolean startPathAnomate(View view, Path path, int duration, Interpolator itl) {
+    private boolean startPathAnomate(View view, Path path, int duration, Interpolator itl, Animator.AnimatorListener aml) {
         if (view != null) {
             if (indexOfChild(view) == -1) {
                 return false;
@@ -92,6 +143,9 @@ public class PathAnimatorContainer extends FrameLayout implements ValueAnimator.
             animator.setDuration(duration);
             if (itl != null) {
                 animator.setInterpolator(itl);
+            }
+            if (aml != null) {
+                animator.addListener(aml);
             }
             animator.addUpdateListener(this);
             animator.start();
@@ -139,6 +193,38 @@ public class PathAnimatorContainer extends FrameLayout implements ValueAnimator.
         public ViewPointF(View view, PointF point) {
             this.view = view;
             this.point = point;
+        }
+    }
+
+    /**
+     *
+     */
+    class NormalAnimatorListener implements Animator.AnimatorListener {
+
+        private View view;
+
+        public NormalAnimatorListener(View view) {
+            this.view = view;
+        }
+
+        @Override
+        public void onAnimationStart(Animator animation) {
+            view.setVisibility(VISIBLE);
+        }
+
+        @Override
+        public void onAnimationEnd(Animator animation) {
+            PathAnimatorContainer.this.removeView(view);
+        }
+
+        @Override
+        public void onAnimationCancel(Animator animation) {
+
+        }
+
+        @Override
+        public void onAnimationRepeat(Animator animation) {
+
         }
     }
 

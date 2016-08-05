@@ -95,17 +95,19 @@
 
     </com.youshangxiaozi.testweidge.GiftGroove>
 
+    <com.youshangxiaozi.testweidge.RiverEffectsView
+        android:id="@+id/rev"
+        android:layout_below="@+id/gg"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        def:rev_river="@mipmap/hello_heliu"
+        def:rev_logo="@mipmap/hello_logo" />
+
     <com.youshangxiaozi.testweidge.PathAnimatorContainer
         android:id="@+id/pac"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <com.youshangxiaozi.testweidge.RiverEffectsView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            def:river="@drawable/hello_heliu"
-            def:logo="@drawable/hello_logo" />
-
-    </com.youshangxiaozi.testweidge.PathAnimatorContainer>
+        android:layout_height="match_parent"/>
 
 </RelativeLayout>

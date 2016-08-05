@@ -1,18 +1,35 @@
 package com.youshangxiaozi.testweidge;
 
+import android.graphics.PointF;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
 
     private SlotNumView slotNumView;
     private GiftGroove gg;
+    private PathAnimatorContainer pac;
+    private static final int[] IDS = new int[]{
+            R.mipmap.icon_live_heart0,
+            R.mipmap.icon_live_heart1,
+            R.mipmap.icon_live_heart2,
+            R.mipmap.icon_live_heart3,
+            R.mipmap.icon_live_heart4,
+            R.mipmap.icon_live_heart5,
+            R.mipmap.icon_live_heart6,
+            R.mipmap.icon_live_heart7,
+    };
+    private Random random = new Random();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +54,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         gg = (GiftGroove)findViewById(R.id.gg);
         gg.setOnClickListener(this);
+
+        pac = (PathAnimatorContainer) findViewById(R.id.pac);
+        pac.postDelayed(new Star(), 3000);
     }
 
     @Override
@@ -72,6 +92,34 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     gg.spread(200);
                 }
                 break;
+        }
+    }
+
+    private boolean focusVisiable;
+    @Override
+    protected void onResume() {
+        super.onResume();
+        focusVisiable = true;
+    }
+
+    @Override
+    protected void onPause() {
+        focusVisiable = false;
+        super.onPause();
+    }
+
+    /**
+     *
+     */
+    class Star implements Runnable{
+
+        @Override
+        public void run() {
+            ImageView iv = new ImageView(MainActivity.this);
+            iv.setImageResource(IDS[random.nextInt(IDS.length)]);
+            pac.addFavor(iv, new PointF(250, 900), new PointF(random.nextInt(1000), random.nextInt(200 + random.nextInt(300))),
+                    new PointF(250, 0));
+            pac.postDelayed(new Star(), 3000);
         }
     }
 }

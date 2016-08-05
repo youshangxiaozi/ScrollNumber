@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="RiverEffectsView">
-        <attr name="logo" format="reference" />
-        <attr name="river" format="reference" />
-        <attr name="mask" format="reference" />
+        <attr name="rev_logo" format="reference" />
+        <attr name="rev_river" format="reference" />
+        <attr name="rev_mask" format="reference" />
     </declare-styleable>
 </resources>
