@@ -1,6 +1,8 @@
 package com.youshangxiaozi.testweidge;
 
 import android.graphics.PointF;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.TypedValue;
@@ -56,7 +58,16 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         gg.setOnClickListener(this);
 
         pac = (PathAnimatorContainer) findViewById(R.id.pac);
-        pac.postDelayed(new Star(), 3000);
+        new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                ImageView iv = new ImageView(MainActivity.this);
+                iv.setImageResource(IDS[random.nextInt(IDS.length)]);
+                pac.addFavor(iv, new PointF(250, 900), new PointF(random.nextInt(1000), random.nextInt(200 + random.nextInt(300))),
+                        new PointF(250, 0));
+            }
+        }.sendEmptyMessageDelayed(0, 2000);
     }
 
     @Override
@@ -106,20 +117,5 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     protected void onPause() {
         focusVisiable = false;
         super.onPause();
-    }
-
-    /**
-     *
-     */
-    class Star implements Runnable{
-
-        @Override
-        public void run() {
-            ImageView iv = new ImageView(MainActivity.this);
-            iv.setImageResource(IDS[random.nextInt(IDS.length)]);
-            pac.addFavor(iv, new PointF(250, 900), new PointF(random.nextInt(1000), random.nextInt(200 + random.nextInt(300))),
-                    new PointF(250, 0));
-            pac.postDelayed(new Star(), 3000);
-        }
     }
 }

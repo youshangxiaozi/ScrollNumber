@@ -17,6 +17,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.animation.LinearInterpolator;
 
 /**
  * @author liangdaijian
@@ -91,6 +92,7 @@ public class RiverEffectsView extends View implements ValueAnimator.AnimatorUpda
 
         PropertyValuesHolder ph_moveX = PropertyValuesHolder.ofFloat(KEY_MOVE_X, riverOfset, mask.getWidth() - river.getWidth());
         oaMarquee = ObjectAnimator.ofPropertyValuesHolder(this, ph_moveX);
+        oaMarquee.setInterpolator(new LinearInterpolator());
         oaMarquee.setDuration(MARQUEE_DURATE);
         oaMarquee.setRepeatCount(ValueAnimator.INFINITE);
         oaMarquee.setRepeatMode(ValueAnimator.RESTART);

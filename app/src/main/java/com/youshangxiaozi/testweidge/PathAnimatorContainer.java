@@ -214,12 +214,14 @@ public class PathAnimatorContainer extends FrameLayout implements ValueAnimator.
 
         @Override
         public void onAnimationEnd(Animator animation) {
+            view.setVisibility(GONE);
             PathAnimatorContainer.this.removeView(view);
         }
 
         @Override
         public void onAnimationCancel(Animator animation) {
-
+            view.setVisibility(GONE);
+            PathAnimatorContainer.this.removeView(view);
         }
 
         @Override
